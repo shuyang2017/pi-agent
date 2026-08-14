@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+
+# uv / virtual env
+.venv/
+
+# Secrets / local env (never commit keys)
+.env
+.env.*
+!.env.example
+
+# Internal / vendored (do not publish)
+.workbuddy/
+pi-upstream/
+
+# Workspace artifacts
+*.egg-info/
+dist/
+build/

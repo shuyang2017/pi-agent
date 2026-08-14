@@ -1,0 +1,30 @@
+# Run the coding agent inside a sandbox.
+#
+# The agent's 7 built-in tools execute in this container with the in-container
+# user's privileges. We mount a SINGLE host directory as the workspace and drop
+# all Linux capabilities + set no-new-privileges so it cannot escalate. The
+# agent still needs network egress to reach the LLM API, so do NOT set
+# `network: none` — the isolation target is the filesystem / process surface,
+# not the network surface.
+
+services:
+  pi-agent:
+    build: .
+    working_dir: /workspace
+    # Mount ONLY the directory you want the agent to touch.
+    volumes:
+      - ./workspace:/workspace
+    environment:
+      # --- mock mode (no credentials, fully offline) ---
+      PI_MOCK: "1"
+      # --- OR a real provider (uncomment + supply the key) ---
+      # PI_API: openai-completions
+      # PI_PROVIDER: openrouter
+      # OPENROUTER_API_KEY: ${OPENROUTER_API_KEY}
+    # Defense-in-depth: no privilege escalation, no capabilities.
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    # Do NOT mount the Docker socket or any host secrets.
+    # read_only: true  # enable if your workspace only needs writes to a tmpfs

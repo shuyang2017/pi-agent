@@ -1,0 +1,18 @@
+[project]
+name = "pi-telemetry"
+version = "0.1.0"
+description = "Pluggable telemetry for Pi (Python port of @earendil-works/pi telemetry)"
+requires-python = ">=3.12"
+dependencies = [
+    "pi-agent-core",
+]
+
+[project.optional-dependencies]
+otlp = ["opentelemetry-api>=1.20", "opentelemetry-sdk>=1.20", "opentelemetry-exporter-otlp>=1.20"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/pi_telemetry"]

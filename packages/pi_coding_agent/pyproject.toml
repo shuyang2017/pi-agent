@@ -1,0 +1,16 @@
+[project]
+name = "pi-coding-agent"
+version = "0.1.0"
+description = "Coding agent CLI for Pi (Python port of @earendil-works/pi coding-agent)"
+requires-python = ">=3.12"
+dependencies = [
+    "pi-ai",
+    "pi-agent-core",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/pi_coding_agent"]
